@@ -267,7 +267,7 @@ function StaffTab({ hospitalId }: { hospitalId: string }) {
     queryKey: ["members", hospitalId],
     queryFn: async () => {
       const { data, error } = await supabase.from("profiles")
-        .select("id,email,full_name,job_title,hospital_id")
+        .select("id,email,full_name,title,hospital_id")
         .eq("hospital_id", hospitalId);
       if (error) throw error;
       return data ?? [];
