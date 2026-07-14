@@ -337,7 +337,7 @@ function StaffTab({ hospitalId }: { hospitalId: string }) {
               <div key={m.id} className="flex items-center justify-between rounded-md border bg-background p-3">
                 <div>
                   <div className="font-medium">{m.full_name || m.email}</div>
-                  <div className="text-xs text-muted-foreground">{m.email} {m.job_title ? `· ${m.job_title}` : ""}</div>
+                  <div className="text-xs text-muted-foreground">{m.email} {m.title ? `· ${m.title}` : ""}</div>
                 </div>
               </div>
             ))}
