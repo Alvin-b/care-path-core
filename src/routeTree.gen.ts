@@ -9,10 +9,24 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as OnboardingRouteImport } from './routes/onboarding'
+import { Route as HospitalRouteImport } from './routes/hospital'
 import { Route as AuthRouteImport } from './routes/auth'
 import { Route as AdminRouteImport } from './routes/admin'
+import { Route as AcceptInviteRouteImport } from './routes/accept-invite'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as ApiPublicConfigHospitalCodeRouteImport } from './routes/api/public/config.$hospitalCode'
 
+const OnboardingRoute = OnboardingRouteImport.update({
+  id: '/onboarding',
+  path: '/onboarding',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const HospitalRoute = HospitalRouteImport.update({
+  id: '/hospital',
+  path: '/hospital',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AuthRoute = AuthRouteImport.update({
   id: '/auth',
   path: '/auth',
@@ -23,44 +37,107 @@ const AdminRoute = AdminRouteImport.update({
   path: '/admin',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AcceptInviteRoute = AcceptInviteRouteImport.update({
+  id: '/accept-invite',
+  path: '/accept-invite',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiPublicConfigHospitalCodeRoute =
+  ApiPublicConfigHospitalCodeRouteImport.update({
+    id: '/api/public/config/$hospitalCode',
+    path: '/api/public/config/$hospitalCode',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/accept-invite': typeof AcceptInviteRoute
   '/admin': typeof AdminRoute
   '/auth': typeof AuthRoute
+  '/hospital': typeof HospitalRoute
+  '/onboarding': typeof OnboardingRoute
+  '/api/public/config/$hospitalCode': typeof ApiPublicConfigHospitalCodeRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/accept-invite': typeof AcceptInviteRoute
   '/admin': typeof AdminRoute
   '/auth': typeof AuthRoute
+  '/hospital': typeof HospitalRoute
+  '/onboarding': typeof OnboardingRoute
+  '/api/public/config/$hospitalCode': typeof ApiPublicConfigHospitalCodeRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/accept-invite': typeof AcceptInviteRoute
   '/admin': typeof AdminRoute
   '/auth': typeof AuthRoute
+  '/hospital': typeof HospitalRoute
+  '/onboarding': typeof OnboardingRoute
+  '/api/public/config/$hospitalCode': typeof ApiPublicConfigHospitalCodeRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/admin' | '/auth'
+  fullPaths:
+    | '/'
+    | '/accept-invite'
+    | '/admin'
+    | '/auth'
+    | '/hospital'
+    | '/onboarding'
+    | '/api/public/config/$hospitalCode'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/admin' | '/auth'
-  id: '__root__' | '/' | '/admin' | '/auth'
+  to:
+    | '/'
+    | '/accept-invite'
+    | '/admin'
+    | '/auth'
+    | '/hospital'
+    | '/onboarding'
+    | '/api/public/config/$hospitalCode'
+  id:
+    | '__root__'
+    | '/'
+    | '/accept-invite'
+    | '/admin'
+    | '/auth'
+    | '/hospital'
+    | '/onboarding'
+    | '/api/public/config/$hospitalCode'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AcceptInviteRoute: typeof AcceptInviteRoute
   AdminRoute: typeof AdminRoute
   AuthRoute: typeof AuthRoute
+  HospitalRoute: typeof HospitalRoute
+  OnboardingRoute: typeof OnboardingRoute
+  ApiPublicConfigHospitalCodeRoute: typeof ApiPublicConfigHospitalCodeRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/onboarding': {
+      id: '/onboarding'
+      path: '/onboarding'
+      fullPath: '/onboarding'
+      preLoaderRoute: typeof OnboardingRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/hospital': {
+      id: '/hospital'
+      path: '/hospital'
+      fullPath: '/hospital'
+      preLoaderRoute: typeof HospitalRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/auth': {
       id: '/auth'
       path: '/auth'
@@ -75,6 +152,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/accept-invite': {
+      id: '/accept-invite'
+      path: '/accept-invite'
+      fullPath: '/accept-invite'
+      preLoaderRoute: typeof AcceptInviteRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -82,13 +166,24 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/public/config/$hospitalCode': {
+      id: '/api/public/config/$hospitalCode'
+      path: '/api/public/config/$hospitalCode'
+      fullPath: '/api/public/config/$hospitalCode'
+      preLoaderRoute: typeof ApiPublicConfigHospitalCodeRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AcceptInviteRoute: AcceptInviteRoute,
   AdminRoute: AdminRoute,
   AuthRoute: AuthRoute,
+  HospitalRoute: HospitalRoute,
+  OnboardingRoute: OnboardingRoute,
+  ApiPublicConfigHospitalCodeRoute: ApiPublicConfigHospitalCodeRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
