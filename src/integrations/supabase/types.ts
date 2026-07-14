@@ -267,6 +267,79 @@ export type Database = {
           },
         ]
       }
+      hospital_invites: {
+        Row: {
+          accepted_at: string | null
+          accepted_by: string | null
+          branch_id: string | null
+          created_at: string
+          department_id: string | null
+          email: string
+          expires_at: string
+          hospital_id: string
+          id: string
+          invited_by: string | null
+          role: Database["public"]["Enums"]["app_role"]
+          status: string
+          token: string
+          updated_at: string
+        }
+        Insert: {
+          accepted_at?: string | null
+          accepted_by?: string | null
+          branch_id?: string | null
+          created_at?: string
+          department_id?: string | null
+          email: string
+          expires_at?: string
+          hospital_id: string
+          id?: string
+          invited_by?: string | null
+          role: Database["public"]["Enums"]["app_role"]
+          status?: string
+          token?: string
+          updated_at?: string
+        }
+        Update: {
+          accepted_at?: string | null
+          accepted_by?: string | null
+          branch_id?: string | null
+          created_at?: string
+          department_id?: string | null
+          email?: string
+          expires_at?: string
+          hospital_id?: string
+          id?: string
+          invited_by?: string | null
+          role?: Database["public"]["Enums"]["app_role"]
+          status?: string
+          token?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "hospital_invites_branch_id_fkey"
+            columns: ["branch_id"]
+            isOneToOne: false
+            referencedRelation: "branches"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "hospital_invites_department_id_fkey"
+            columns: ["department_id"]
+            isOneToOne: false
+            referencedRelation: "departments"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "hospital_invites_hospital_id_fkey"
+            columns: ["hospital_id"]
+            isOneToOne: false
+            referencedRelation: "hospitals"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       hospital_modules: {
         Row: {
           enabled: boolean
@@ -758,6 +831,11 @@ export type Database = {
       is_hospital_admin: { Args: { _hospital_id: string }; Returns: boolean }
       is_hospital_member: { Args: { _hospital_id: string }; Returns: boolean }
       is_super_admin: { Args: { _user_id: string }; Returns: boolean }
+      public_hospital_config: { Args: { _code: string }; Returns: Json }
+      recommend_modules_for_level: {
+        Args: { _level: Database["public"]["Enums"]["facility_level"] }
+        Returns: string[]
+      }
     }
     Enums: {
       app_role:
