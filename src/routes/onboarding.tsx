@@ -79,7 +79,7 @@ function OnboardingWizard() {
     queryKey: ["recommended-modules", facility.facility_level],
     queryFn: async () => {
       const { data, error } = await supabase.rpc("recommend_modules_for_level", {
-        _level: facility.facility_level,
+        _level: facility.facility_level as never,
       });
       if (error) throw error;
       return (data ?? []) as string[];
