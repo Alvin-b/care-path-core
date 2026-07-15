@@ -649,6 +649,237 @@ export type Database = {
           },
         ]
       }
+      patient_counters: {
+        Row: {
+          hospital_id: string
+          last_value: number
+        }
+        Insert: {
+          hospital_id: string
+          last_value?: number
+        }
+        Update: {
+          hospital_id?: string
+          last_value?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "patient_counters_hospital_id_fkey"
+            columns: ["hospital_id"]
+            isOneToOne: true
+            referencedRelation: "hospitals"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      patients: {
+        Row: {
+          address_line: string | null
+          allergies: string[]
+          alt_phone: string | null
+          birth_cert_no: string | null
+          blood_group: Database["public"]["Enums"]["blood_group"]
+          branch_id: string | null
+          chronic_conditions: string[]
+          consent_data_processing: boolean
+          consent_signed_at: string | null
+          consent_sms: boolean
+          county: string | null
+          created_at: string
+          date_of_birth: string | null
+          deceased_at: string | null
+          disabilities: string[]
+          dob_estimated: boolean
+          email: string | null
+          emergency_contact_name: string | null
+          emergency_contact_phone: string | null
+          emergency_contact_relationship: string | null
+          employer: string | null
+          first_name: string
+          gender_identity: string | null
+          hospital_id: string
+          id: string
+          is_confidential: boolean
+          is_deceased: boolean
+          is_vip: boolean
+          last_name: string
+          marital_status: Database["public"]["Enums"]["marital_status"]
+          merged_into: string | null
+          middle_name: string | null
+          mrn: string
+          national_id: string | null
+          nationality: string | null
+          nhif_number: string | null
+          nok_address: string | null
+          nok_alt_phone: string | null
+          nok_name: string | null
+          nok_phone: string | null
+          nok_relationship: string | null
+          notes: string | null
+          occupation: string | null
+          other_insurance: Json
+          other_names: string | null
+          passport_no: string | null
+          phone: string | null
+          photo_url: string | null
+          postal_code: string | null
+          preferred_language: string | null
+          preferred_name: string | null
+          registered_by: string | null
+          religion: string | null
+          sex: Database["public"]["Enums"]["patient_sex"]
+          sha_number: string | null
+          sub_county: string | null
+          updated_at: string
+          village: string | null
+          ward: string | null
+        }
+        Insert: {
+          address_line?: string | null
+          allergies?: string[]
+          alt_phone?: string | null
+          birth_cert_no?: string | null
+          blood_group?: Database["public"]["Enums"]["blood_group"]
+          branch_id?: string | null
+          chronic_conditions?: string[]
+          consent_data_processing?: boolean
+          consent_signed_at?: string | null
+          consent_sms?: boolean
+          county?: string | null
+          created_at?: string
+          date_of_birth?: string | null
+          deceased_at?: string | null
+          disabilities?: string[]
+          dob_estimated?: boolean
+          email?: string | null
+          emergency_contact_name?: string | null
+          emergency_contact_phone?: string | null
+          emergency_contact_relationship?: string | null
+          employer?: string | null
+          first_name: string
+          gender_identity?: string | null
+          hospital_id: string
+          id?: string
+          is_confidential?: boolean
+          is_deceased?: boolean
+          is_vip?: boolean
+          last_name: string
+          marital_status?: Database["public"]["Enums"]["marital_status"]
+          merged_into?: string | null
+          middle_name?: string | null
+          mrn: string
+          national_id?: string | null
+          nationality?: string | null
+          nhif_number?: string | null
+          nok_address?: string | null
+          nok_alt_phone?: string | null
+          nok_name?: string | null
+          nok_phone?: string | null
+          nok_relationship?: string | null
+          notes?: string | null
+          occupation?: string | null
+          other_insurance?: Json
+          other_names?: string | null
+          passport_no?: string | null
+          phone?: string | null
+          photo_url?: string | null
+          postal_code?: string | null
+          preferred_language?: string | null
+          preferred_name?: string | null
+          registered_by?: string | null
+          religion?: string | null
+          sex?: Database["public"]["Enums"]["patient_sex"]
+          sha_number?: string | null
+          sub_county?: string | null
+          updated_at?: string
+          village?: string | null
+          ward?: string | null
+        }
+        Update: {
+          address_line?: string | null
+          allergies?: string[]
+          alt_phone?: string | null
+          birth_cert_no?: string | null
+          blood_group?: Database["public"]["Enums"]["blood_group"]
+          branch_id?: string | null
+          chronic_conditions?: string[]
+          consent_data_processing?: boolean
+          consent_signed_at?: string | null
+          consent_sms?: boolean
+          county?: string | null
+          created_at?: string
+          date_of_birth?: string | null
+          deceased_at?: string | null
+          disabilities?: string[]
+          dob_estimated?: boolean
+          email?: string | null
+          emergency_contact_name?: string | null
+          emergency_contact_phone?: string | null
+          emergency_contact_relationship?: string | null
+          employer?: string | null
+          first_name?: string
+          gender_identity?: string | null
+          hospital_id?: string
+          id?: string
+          is_confidential?: boolean
+          is_deceased?: boolean
+          is_vip?: boolean
+          last_name?: string
+          marital_status?: Database["public"]["Enums"]["marital_status"]
+          merged_into?: string | null
+          middle_name?: string | null
+          mrn?: string
+          national_id?: string | null
+          nationality?: string | null
+          nhif_number?: string | null
+          nok_address?: string | null
+          nok_alt_phone?: string | null
+          nok_name?: string | null
+          nok_phone?: string | null
+          nok_relationship?: string | null
+          notes?: string | null
+          occupation?: string | null
+          other_insurance?: Json
+          other_names?: string | null
+          passport_no?: string | null
+          phone?: string | null
+          photo_url?: string | null
+          postal_code?: string | null
+          preferred_language?: string | null
+          preferred_name?: string | null
+          registered_by?: string | null
+          religion?: string | null
+          sex?: Database["public"]["Enums"]["patient_sex"]
+          sha_number?: string | null
+          sub_county?: string | null
+          updated_at?: string
+          village?: string | null
+          ward?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "patients_branch_id_fkey"
+            columns: ["branch_id"]
+            isOneToOne: false
+            referencedRelation: "branches"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "patients_hospital_id_fkey"
+            columns: ["hospital_id"]
+            isOneToOne: false
+            referencedRelation: "hospitals"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "patients_merged_into_fkey"
+            columns: ["merged_into"]
+            isOneToOne: false
+            referencedRelation: "patients"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       permissions: {
         Row: {
           code: string
@@ -820,6 +1051,83 @@ export type Database = {
     }
     Functions: {
       current_hospital_id: { Args: never; Returns: string }
+      find_patient_duplicates: {
+        Args: {
+          _dob: string
+          _first_name: string
+          _hospital_id: string
+          _last_name: string
+          _national_id: string
+          _phone: string
+        }
+        Returns: {
+          address_line: string | null
+          allergies: string[]
+          alt_phone: string | null
+          birth_cert_no: string | null
+          blood_group: Database["public"]["Enums"]["blood_group"]
+          branch_id: string | null
+          chronic_conditions: string[]
+          consent_data_processing: boolean
+          consent_signed_at: string | null
+          consent_sms: boolean
+          county: string | null
+          created_at: string
+          date_of_birth: string | null
+          deceased_at: string | null
+          disabilities: string[]
+          dob_estimated: boolean
+          email: string | null
+          emergency_contact_name: string | null
+          emergency_contact_phone: string | null
+          emergency_contact_relationship: string | null
+          employer: string | null
+          first_name: string
+          gender_identity: string | null
+          hospital_id: string
+          id: string
+          is_confidential: boolean
+          is_deceased: boolean
+          is_vip: boolean
+          last_name: string
+          marital_status: Database["public"]["Enums"]["marital_status"]
+          merged_into: string | null
+          middle_name: string | null
+          mrn: string
+          national_id: string | null
+          nationality: string | null
+          nhif_number: string | null
+          nok_address: string | null
+          nok_alt_phone: string | null
+          nok_name: string | null
+          nok_phone: string | null
+          nok_relationship: string | null
+          notes: string | null
+          occupation: string | null
+          other_insurance: Json
+          other_names: string | null
+          passport_no: string | null
+          phone: string | null
+          photo_url: string | null
+          postal_code: string | null
+          preferred_language: string | null
+          preferred_name: string | null
+          registered_by: string | null
+          religion: string | null
+          sex: Database["public"]["Enums"]["patient_sex"]
+          sha_number: string | null
+          sub_county: string | null
+          updated_at: string
+          village: string | null
+          ward: string | null
+        }[]
+        SetofOptions: {
+          from: "*"
+          to: "patients"
+          isOneToOne: false
+          isSetofReturn: true
+        }
+      }
       has_role: {
         Args: {
           _hospital_id?: string
@@ -853,6 +1161,16 @@ export type Database = {
         | "cashier"
         | "triage_nurse"
         | "manager"
+      blood_group:
+        | "A+"
+        | "A-"
+        | "B+"
+        | "B-"
+        | "AB+"
+        | "AB-"
+        | "O+"
+        | "O-"
+        | "unknown"
       facility_level:
         | "dispensary"
         | "clinic"
@@ -863,7 +1181,16 @@ export type Database = {
         | "private_hospital"
         | "diagnostic_centre"
       license_status: "trial" | "active" | "expired" | "suspended" | "cancelled"
+      marital_status:
+        | "single"
+        | "married"
+        | "divorced"
+        | "widowed"
+        | "separated"
+        | "cohabiting"
+        | "unknown"
       module_status: "available" | "installed" | "disabled" | "deprecated"
+      patient_sex: "male" | "female" | "intersex" | "unknown"
       platform_kind: "android" | "ios" | "windows" | "macos" | "linux" | "web"
       subscription_plan:
         | "starter"
@@ -1013,6 +1340,17 @@ export const Constants = {
         "triage_nurse",
         "manager",
       ],
+      blood_group: [
+        "A+",
+        "A-",
+        "B+",
+        "B-",
+        "AB+",
+        "AB-",
+        "O+",
+        "O-",
+        "unknown",
+      ],
       facility_level: [
         "dispensary",
         "clinic",
@@ -1024,7 +1362,17 @@ export const Constants = {
         "diagnostic_centre",
       ],
       license_status: ["trial", "active", "expired", "suspended", "cancelled"],
+      marital_status: [
+        "single",
+        "married",
+        "divorced",
+        "widowed",
+        "separated",
+        "cohabiting",
+        "unknown",
+      ],
       module_status: ["available", "installed", "disabled", "deprecated"],
+      patient_sex: ["male", "female", "intersex", "unknown"],
       platform_kind: ["android", "ios", "windows", "macos", "linux", "web"],
       subscription_plan: [
         "starter",
