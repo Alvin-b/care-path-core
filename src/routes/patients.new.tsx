@@ -174,7 +174,7 @@ function RegisterPatient() {
         is_confidential: f.is_confidential,
         registered_by: user?.id ?? null,
       };
-      const { data, error } = await supabase.from("patients").insert(payload).select().single();
+      const { data, error } = await supabase.from("patients").insert(payload as never).select().single();
       if (error) throw error;
       return data;
     },

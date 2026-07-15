@@ -58,8 +58,11 @@ function Landing() {
               <Link to="/onboarding">
                 <Button size="lg">Onboard a facility</Button>
               </Link>
+              <Link to="/patients">
+                <Button size="lg" variant="outline">Patients</Button>
+              </Link>
               <Link to="/hospital">
-                <Button size="lg" variant="outline">Hospital admin</Button>
+                <Button size="lg" variant="ghost">Hospital admin</Button>
               </Link>
               <Link to="/admin">
                 <Button size="lg" variant="ghost">Platform console</Button>
