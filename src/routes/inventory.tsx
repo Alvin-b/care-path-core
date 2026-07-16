@@ -78,10 +78,9 @@ function InventoryPage() {
   });
 
   const lowStock = useMemo(
-    () => items.filter((i: never) => {
-      const it = i as { id: string; reorder_level: number };
-      return (stockByItem[it.id]?.total ?? 0) <= Number(it.reorder_level ?? 0);
-    }),
+    () => (items as Array<{ id: string; reorder_level: number }>).filter(
+      (it) => (stockByItem[it.id]?.total ?? 0) <= Number(it.reorder_level ?? 0),
+    ),
     [items, stockByItem],
   );
 
@@ -95,8 +94,8 @@ function InventoryPage() {
           <p className="text-sm text-muted-foreground">Medications, supplies, and equipment across the hospital.</p>
         </div>
         <div className="flex gap-2">
-          <AddItemDialog hospitalId={hospitalId} onSaved={() => qc.invalidateQueries({ queryKey: ["inv-items"] })} />
-          <ReceiveStockDialog hospitalId={hospitalId} items={items as never[]} onSaved={() => {
+          <AddItemDialog hospitalId={hospitalId ?? undefined} onSaved={() => qc.invalidateQueries({ queryKey: ["inv-items"] })} />
+          <ReceiveStockDialog hospitalId={hospitalId ?? undefined} items={items as never[]} onSaved={() => {
             qc.invalidateQueries({ queryKey: ["inv-items"] });
             qc.invalidateQueries({ queryKey: ["inv-stock"] });
           }} />

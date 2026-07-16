@@ -63,6 +63,10 @@ export const aiFindSimilarPatients = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
   .inputValidator((raw: unknown) => FindInput.parse(raw))
   .handler(async ({ data, context }) => {
+    type Match = {
+      patient_id: string; mrn: string; first_name: string; last_name: string;
+      phone: string | null; date_of_birth: string | null; similarity: number;
+    };
     const text = patientText({
       first_name: data.firstName,
       middle_name: data.middleName,
@@ -73,7 +77,7 @@ export const aiFindSimilarPatients = createServerFn({ method: "POST" })
       sha_number: data.shaNumber,
       sex: data.sex,
     }).trim();
-    if (text.length < 3) return { matches: [] as Array<Record<string, unknown>> };
+    if (text.length < 3) return { matches: [] as Match[] };
 
     const vec = await embed(text);
     const { data: rows, error } = await context.supabase.rpc(
@@ -86,10 +90,7 @@ export const aiFindSimilarPatients = createServerFn({ method: "POST" })
       } as never,
     );
     if (error) throw new Error(error.message);
-    return { matches: (rows ?? []) as Array<{
-      patient_id: string; mrn: string; first_name: string; last_name: string;
-      phone: string | null; date_of_birth: string | null; similarity: number;
-    }> };
+    return { matches: (rows ?? []) as Match[] };
   });
 
 const IndexInput = z.object({ patientId: z.string().uuid() });

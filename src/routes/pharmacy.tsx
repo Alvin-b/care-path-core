@@ -71,7 +71,7 @@ function PharmacyPage() {
           <h1 className="text-2xl font-semibold tracking-tight">Pharmacy</h1>
           <p className="text-sm text-muted-foreground">Prescriptions queue and dispensing.</p>
         </div>
-        <NewPrescriptionDialog hospitalId={hospitalId} onSaved={() => qc.invalidateQueries({ queryKey: ["prescriptions"] })} />
+        <NewPrescriptionDialog hospitalId={hospitalId ?? undefined} onSaved={() => qc.invalidateQueries({ queryKey: ["prescriptions"] })} />
       </div>
 
       <div className="mb-4 flex gap-1">
