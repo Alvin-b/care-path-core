@@ -117,6 +117,21 @@ function RegisterPatient() {
     },
   });
 
+  const aiFind = useServerFn(aiFindSimilarPatients);
+  const aiIndex = useServerFn(aiIndexPatient);
+  const aiDup = useMutation({
+    mutationFn: async () => {
+      if (!hospitalId) return { matches: [] };
+      return aiFind({ data: {
+        hospitalId,
+        firstName: f.first_name, middleName: f.middle_name, lastName: f.last_name,
+        dateOfBirth: f.date_of_birth || null, phone: f.phone || null,
+        nationalId: f.national_id || null, shaNumber: f.sha_number || null, sex: f.sex,
+      }});
+    },
+    onError: (e: Error) => toast.error(`AI match failed: ${e.message}`),
+  });
+
   const canCheck = f.first_name.trim() && f.last_name.trim();
   const canSubmit = f.first_name.trim() && f.last_name.trim() && f.sex && f.consent_data_processing && !!hospitalId;
 
@@ -182,6 +197,8 @@ function RegisterPatient() {
     },
     onSuccess: (p) => {
       toast.success(`Registered ${p.first_name} ${p.last_name} — MRN ${p.mrn}`);
+      // Fire-and-forget: index this patient for future AI duplicate search
+      aiIndex({ data: { patientId: p.id } }).catch(() => { /* non-blocking */ });
       navigate({ to: "/patients/$id", params: { id: p.id } });
     },
     onError: (e: Error) => toast.error(e.message || "Failed to register patient"),
