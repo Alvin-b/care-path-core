@@ -30,6 +30,19 @@ function PatientDetail() {
     },
   });
 
+  const { data: registrar } = useQuery({
+    queryKey: ["patient-registrar", p?.registered_by],
+    enabled: !!p?.registered_by,
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from("profiles")
+        .select("id, full_name, email")
+        .eq("id", p!.registered_by!)
+        .maybeSingle();
+      if (error) throw error;
+      return data;
+    },
+
   if (loading || isLoading) return <div className="flex min-h-screen items-center justify-center text-muted-foreground">Loading…</div>;
   if (error) return <div className="p-8 text-sm text-destructive">{error.message}</div>;
   if (!p) return <div className="p-8 text-sm text-muted-foreground">Patient not found.</div>;
