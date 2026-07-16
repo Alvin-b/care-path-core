@@ -6,7 +6,7 @@ import { useAuth } from "@/hooks/use-auth";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Stethoscope, ChevronLeft, Phone, Mail, MapPin, Heart, ShieldAlert } from "lucide-react";
+import { Stethoscope, ChevronLeft, Phone, Mail, MapPin, Heart, ShieldAlert, UserCheck, Clock } from "lucide-react";
 
 export const Route = createFileRoute("/patients/$id")({
   head: () => ({ meta: [{ title: "Patient — Afyacore HMIS" }] }),
