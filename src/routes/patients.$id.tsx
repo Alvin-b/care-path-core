@@ -83,6 +83,19 @@ function PatientDetail() {
                 {p.blood_group !== "unknown" && <> · Blood {p.blood_group}</>}
               </div>
             </div>
+            <div className="flex flex-col gap-1 text-xs text-muted-foreground sm:items-end sm:text-right">
+              <div className="flex items-center gap-1.5">
+                <UserCheck className="h-3.5 w-3.5" />
+                <span>Registered by <b className="text-foreground">{registrar?.full_name || registrar?.email || (p.registered_by ? "Unknown user" : "System")}</b></span>
+              </div>
+              <div className="flex items-center gap-1.5">
+                <Clock className="h-3.5 w-3.5" />
+                <span>{new Date(p.created_at).toLocaleString()}</span>
+              </div>
+              {p.updated_at && p.updated_at !== p.created_at && (
+                <div className="text-[11px] opacity-70">Last updated {new Date(p.updated_at).toLocaleString()}</div>
+              )}
+            </div>
           </CardContent>
         </Card>
 
