@@ -374,21 +374,31 @@ function RegisterPatient() {
         <Card>
           <CardContent className="flex flex-col gap-3 py-6 sm:flex-row sm:items-center sm:justify-between">
             <div className="text-sm text-muted-foreground">
-              Run a duplicate check before saving to avoid double-registration.
+              Run duplicate checks before saving. AI match finds similar records even with typos or partial info.
             </div>
-            <Button
-              variant="outline"
-              disabled={!canCheck || dupCheck.isPending}
-              onClick={() => { setCheckedDupes(true); dupCheck.mutate(); }}
-            >
-              <UserCheck className="mr-2 h-4 w-4" />
-              {dupCheck.isPending ? "Checking…" : "Check for duplicates"}
-            </Button>
+            <div className="flex flex-wrap gap-2">
+              <Button
+                variant="outline"
+                disabled={!canCheck || dupCheck.isPending}
+                onClick={() => { setCheckedDupes(true); dupCheck.mutate(); }}
+              >
+                <UserCheck className="mr-2 h-4 w-4" />
+                {dupCheck.isPending ? "Checking…" : "Exact-match check"}
+              </Button>
+              <Button
+                variant="outline"
+                disabled={!canCheck || aiDup.isPending}
+                onClick={() => aiDup.mutate()}
+              >
+                <Sparkles className="mr-2 h-4 w-4" />
+                {aiDup.isPending ? "Searching…" : "AI similar patients"}
+              </Button>
+            </div>
           </CardContent>
           {checkedDupes && dupCheck.data && (
             <CardContent className="border-t pt-4">
               {dupCheck.data.length === 0 ? (
-                <div className="text-sm text-muted-foreground">No potential duplicates found.</div>
+                <div className="text-sm text-muted-foreground">No exact duplicates found.</div>
               ) : (
                 <div className="space-y-2">
                   <div className="flex items-center gap-2 text-sm font-medium text-amber-600">
@@ -406,6 +416,28 @@ function RegisterPatient() {
                   </ul>
                 </div>
               )}
+            </CardContent>
+          )}
+          {aiDup.data && aiDup.data.matches.length > 0 && (
+            <CardContent className="border-t pt-4">
+              <div className="mb-2 flex items-center gap-2 text-sm font-medium text-primary">
+                <Sparkles className="h-4 w-4" /> AI found {aiDup.data.matches.length} semantically similar patient(s):
+              </div>
+              <ul className="space-y-1 text-sm">
+                {aiDup.data.matches.map((m) => (
+                  <li key={m.patient_id} className="flex items-center justify-between rounded-md border bg-muted/30 p-2">
+                    <span>
+                      <span className="font-mono text-xs">{m.mrn}</span> — {m.first_name} {m.last_name}
+                      {m.phone ? ` · ${m.phone}` : ""}
+                      {m.date_of_birth ? ` · DOB ${m.date_of_birth}` : ""}
+                      <span className="ml-2 text-xs text-muted-foreground">({Math.round(m.similarity * 100)}% match)</span>
+                    </span>
+                    <Link to="/patients/$id" params={{ id: m.patient_id }}>
+                      <Button size="sm" variant="ghost">Open existing</Button>
+                    </Link>
+                  </li>
+                ))}
+              </ul>
             </CardContent>
           )}
         </Card>
