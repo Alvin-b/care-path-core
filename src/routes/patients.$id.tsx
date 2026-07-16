@@ -42,6 +42,9 @@ function PatientDetail() {
       if (error) throw error;
       return data;
     },
+  });
+
+
 
   if (loading || isLoading) return <div className="flex min-h-screen items-center justify-center text-muted-foreground">Loading…</div>;
   if (error) return <div className="p-8 text-sm text-destructive">{error.message}</div>;
