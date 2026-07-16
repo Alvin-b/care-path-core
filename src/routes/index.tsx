@@ -61,6 +61,12 @@ function Landing() {
               <Link to="/patients">
                 <Button size="lg" variant="outline">Patients</Button>
               </Link>
+              <Link to="/pharmacy">
+                <Button size="lg" variant="outline">Pharmacy</Button>
+              </Link>
+              <Link to="/inventory">
+                <Button size="lg" variant="outline">Inventory</Button>
+              </Link>
               <Link to="/hospital">
                 <Button size="lg" variant="ghost">Hospital admin</Button>
               </Link>

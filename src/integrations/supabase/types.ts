@@ -477,6 +477,153 @@ export type Database = {
         }
         Relationships: []
       }
+      inventory_batches: {
+        Row: {
+          batch_no: string | null
+          branch_id: string | null
+          cost_price: number
+          created_at: string
+          expiry_date: string | null
+          hospital_id: string
+          id: string
+          item_id: string
+          notes: string | null
+          quantity_on_hand: number
+          received_at: string
+          received_by: string | null
+          supplier: string | null
+          updated_at: string
+        }
+        Insert: {
+          batch_no?: string | null
+          branch_id?: string | null
+          cost_price?: number
+          created_at?: string
+          expiry_date?: string | null
+          hospital_id: string
+          id?: string
+          item_id: string
+          notes?: string | null
+          quantity_on_hand?: number
+          received_at?: string
+          received_by?: string | null
+          supplier?: string | null
+          updated_at?: string
+        }
+        Update: {
+          batch_no?: string | null
+          branch_id?: string | null
+          cost_price?: number
+          created_at?: string
+          expiry_date?: string | null
+          hospital_id?: string
+          id?: string
+          item_id?: string
+          notes?: string | null
+          quantity_on_hand?: number
+          received_at?: string
+          received_by?: string | null
+          supplier?: string | null
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "inventory_batches_branch_id_fkey"
+            columns: ["branch_id"]
+            isOneToOne: false
+            referencedRelation: "branches"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "inventory_batches_hospital_id_fkey"
+            columns: ["hospital_id"]
+            isOneToOne: false
+            referencedRelation: "hospitals"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "inventory_batches_item_id_fkey"
+            columns: ["item_id"]
+            isOneToOne: false
+            referencedRelation: "inventory_items"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      inventory_items: {
+        Row: {
+          active: boolean
+          category: Database["public"]["Enums"]["item_category"]
+          created_at: string
+          created_by: string | null
+          description: string | null
+          form: string | null
+          generic_name: string | null
+          hospital_id: string
+          id: string
+          is_controlled: boolean
+          manufacturer: string | null
+          name: string
+          reorder_level: number
+          sku: string | null
+          strength: string | null
+          tags: string[]
+          unit: string
+          unit_price: number
+          updated_at: string
+        }
+        Insert: {
+          active?: boolean
+          category?: Database["public"]["Enums"]["item_category"]
+          created_at?: string
+          created_by?: string | null
+          description?: string | null
+          form?: string | null
+          generic_name?: string | null
+          hospital_id: string
+          id?: string
+          is_controlled?: boolean
+          manufacturer?: string | null
+          name: string
+          reorder_level?: number
+          sku?: string | null
+          strength?: string | null
+          tags?: string[]
+          unit?: string
+          unit_price?: number
+          updated_at?: string
+        }
+        Update: {
+          active?: boolean
+          category?: Database["public"]["Enums"]["item_category"]
+          created_at?: string
+          created_by?: string | null
+          description?: string | null
+          form?: string | null
+          generic_name?: string | null
+          hospital_id?: string
+          id?: string
+          is_controlled?: boolean
+          manufacturer?: string | null
+          name?: string
+          reorder_level?: number
+          sku?: string | null
+          strength?: string | null
+          tags?: string[]
+          unit?: string
+          unit_price?: number
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "inventory_items_hospital_id_fkey"
+            columns: ["hospital_id"]
+            isOneToOne: false
+            referencedRelation: "hospitals"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       licenses: {
         Row: {
           created_at: string
@@ -668,6 +815,48 @@ export type Database = {
             columns: ["hospital_id"]
             isOneToOne: true
             referencedRelation: "hospitals"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      patient_embeddings: {
+        Row: {
+          embedding: string
+          hospital_id: string
+          model_version: string
+          patient_id: string
+          source_text: string
+          updated_at: string
+        }
+        Insert: {
+          embedding: string
+          hospital_id: string
+          model_version?: string
+          patient_id: string
+          source_text: string
+          updated_at?: string
+        }
+        Update: {
+          embedding?: string
+          hospital_id?: string
+          model_version?: string
+          patient_id?: string
+          source_text?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "patient_embeddings_hospital_id_fkey"
+            columns: ["hospital_id"]
+            isOneToOne: false
+            referencedRelation: "hospitals"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "patient_embeddings_patient_id_fkey"
+            columns: ["patient_id"]
+            isOneToOne: true
+            referencedRelation: "patients"
             referencedColumns: ["id"]
           },
         ]
@@ -901,6 +1090,117 @@ export type Database = {
         }
         Relationships: []
       }
+      prescription_items: {
+        Row: {
+          created_at: string
+          dosage: string | null
+          duration_days: number | null
+          frequency: string | null
+          id: string
+          instructions: string | null
+          item_id: string
+          prescription_id: string
+          quantity_dispensed: number
+          quantity_ordered: number
+          route: string | null
+        }
+        Insert: {
+          created_at?: string
+          dosage?: string | null
+          duration_days?: number | null
+          frequency?: string | null
+          id?: string
+          instructions?: string | null
+          item_id: string
+          prescription_id: string
+          quantity_dispensed?: number
+          quantity_ordered: number
+          route?: string | null
+        }
+        Update: {
+          created_at?: string
+          dosage?: string | null
+          duration_days?: number | null
+          frequency?: string | null
+          id?: string
+          instructions?: string | null
+          item_id?: string
+          prescription_id?: string
+          quantity_dispensed?: number
+          quantity_ordered?: number
+          route?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "prescription_items_item_id_fkey"
+            columns: ["item_id"]
+            isOneToOne: false
+            referencedRelation: "inventory_items"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "prescription_items_prescription_id_fkey"
+            columns: ["prescription_id"]
+            isOneToOne: false
+            referencedRelation: "prescriptions"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      prescriptions: {
+        Row: {
+          created_at: string
+          dispensed_at: string | null
+          dispensed_by: string | null
+          hospital_id: string
+          id: string
+          notes: string | null
+          patient_id: string
+          prescribed_by: string | null
+          status: Database["public"]["Enums"]["prescription_status"]
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          dispensed_at?: string | null
+          dispensed_by?: string | null
+          hospital_id: string
+          id?: string
+          notes?: string | null
+          patient_id: string
+          prescribed_by?: string | null
+          status?: Database["public"]["Enums"]["prescription_status"]
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          dispensed_at?: string | null
+          dispensed_by?: string | null
+          hospital_id?: string
+          id?: string
+          notes?: string | null
+          patient_id?: string
+          prescribed_by?: string | null
+          status?: Database["public"]["Enums"]["prescription_status"]
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "prescriptions_hospital_id_fkey"
+            columns: ["hospital_id"]
+            isOneToOne: false
+            referencedRelation: "hospitals"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "prescriptions_patient_id_fkey"
+            columns: ["patient_id"]
+            isOneToOne: false
+            referencedRelation: "patients"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       profiles: {
         Row: {
           active: boolean
@@ -1010,6 +1310,87 @@ export type Database = {
           },
         ]
       }
+      stock_movements: {
+        Row: {
+          batch_id: string | null
+          created_at: string
+          hospital_id: string
+          id: string
+          item_id: string
+          movement_type: Database["public"]["Enums"]["stock_movement_type"]
+          patient_id: string | null
+          performed_by: string | null
+          prescription_id: string | null
+          quantity: number
+          reason: string | null
+          unit_cost: number | null
+        }
+        Insert: {
+          batch_id?: string | null
+          created_at?: string
+          hospital_id: string
+          id?: string
+          item_id: string
+          movement_type: Database["public"]["Enums"]["stock_movement_type"]
+          patient_id?: string | null
+          performed_by?: string | null
+          prescription_id?: string | null
+          quantity: number
+          reason?: string | null
+          unit_cost?: number | null
+        }
+        Update: {
+          batch_id?: string | null
+          created_at?: string
+          hospital_id?: string
+          id?: string
+          item_id?: string
+          movement_type?: Database["public"]["Enums"]["stock_movement_type"]
+          patient_id?: string | null
+          performed_by?: string | null
+          prescription_id?: string | null
+          quantity?: number
+          reason?: string | null
+          unit_cost?: number | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "stock_movements_batch_id_fkey"
+            columns: ["batch_id"]
+            isOneToOne: false
+            referencedRelation: "inventory_batches"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "stock_movements_hospital_id_fkey"
+            columns: ["hospital_id"]
+            isOneToOne: false
+            referencedRelation: "hospitals"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "stock_movements_item_id_fkey"
+            columns: ["item_id"]
+            isOneToOne: false
+            referencedRelation: "inventory_items"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "stock_movements_patient_id_fkey"
+            columns: ["patient_id"]
+            isOneToOne: false
+            referencedRelation: "patients"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "stock_movements_prescription_fk"
+            columns: ["prescription_id"]
+            isOneToOne: false
+            referencedRelation: "prescriptions"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       user_roles: {
         Row: {
           created_at: string
@@ -1051,6 +1432,10 @@ export type Database = {
     }
     Functions: {
       current_hospital_id: { Args: never; Returns: string }
+      dispense_prescription: {
+        Args: { _lines: Json; _prescription_id: string }
+        Returns: Json
+      }
       find_patient_duplicates: {
         Args: {
           _dob: string
@@ -1139,6 +1524,23 @@ export type Database = {
       is_hospital_admin: { Args: { _hospital_id: string }; Returns: boolean }
       is_hospital_member: { Args: { _hospital_id: string }; Returns: boolean }
       is_super_admin: { Args: { _user_id: string }; Returns: boolean }
+      match_patients_by_embedding: {
+        Args: {
+          _hospital_id: string
+          _limit?: number
+          _min_similarity?: number
+          _query: string
+        }
+        Returns: {
+          date_of_birth: string
+          first_name: string
+          last_name: string
+          mrn: string
+          patient_id: string
+          phone: string
+          similarity: number
+        }[]
+      }
       public_hospital_config: { Args: { _code: string }; Returns: Json }
       recommend_modules_for_level: {
         Args: { _level: Database["public"]["Enums"]["facility_level"] }
@@ -1180,6 +1582,13 @@ export type Database = {
         | "referral_hospital"
         | "private_hospital"
         | "diagnostic_centre"
+      item_category:
+        | "medication"
+        | "supply"
+        | "consumable"
+        | "equipment"
+        | "reagent"
+        | "other"
       license_status: "trial" | "active" | "expired" | "suspended" | "cancelled"
       marital_status:
         | "single"
@@ -1192,6 +1601,16 @@ export type Database = {
       module_status: "available" | "installed" | "disabled" | "deprecated"
       patient_sex: "male" | "female" | "intersex" | "unknown"
       platform_kind: "android" | "ios" | "windows" | "macos" | "linux" | "web"
+      prescription_status: "pending" | "partial" | "dispensed" | "cancelled"
+      stock_movement_type:
+        | "receipt"
+        | "dispense"
+        | "adjustment"
+        | "wastage"
+        | "transfer_in"
+        | "transfer_out"
+        | "return"
+        | "opening_balance"
       subscription_plan:
         | "starter"
         | "professional"
@@ -1361,6 +1780,14 @@ export const Constants = {
         "private_hospital",
         "diagnostic_centre",
       ],
+      item_category: [
+        "medication",
+        "supply",
+        "consumable",
+        "equipment",
+        "reagent",
+        "other",
+      ],
       license_status: ["trial", "active", "expired", "suspended", "cancelled"],
       marital_status: [
         "single",
@@ -1374,6 +1801,17 @@ export const Constants = {
       module_status: ["available", "installed", "disabled", "deprecated"],
       patient_sex: ["male", "female", "intersex", "unknown"],
       platform_kind: ["android", "ios", "windows", "macos", "linux", "web"],
+      prescription_status: ["pending", "partial", "dispensed", "cancelled"],
+      stock_movement_type: [
+        "receipt",
+        "dispense",
+        "adjustment",
+        "wastage",
+        "transfer_in",
+        "transfer_out",
+        "return",
+        "opening_balance",
+      ],
       subscription_plan: [
         "starter",
         "professional",

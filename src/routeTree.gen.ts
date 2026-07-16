@@ -9,8 +9,10 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as PharmacyRouteImport } from './routes/pharmacy'
 import { Route as PatientsRouteImport } from './routes/patients'
 import { Route as OnboardingRouteImport } from './routes/onboarding'
+import { Route as InventoryRouteImport } from './routes/inventory'
 import { Route as HospitalRouteImport } from './routes/hospital'
 import { Route as AuthRouteImport } from './routes/auth'
 import { Route as AdminRouteImport } from './routes/admin'
@@ -20,6 +22,11 @@ import { Route as PatientsNewRouteImport } from './routes/patients.new'
 import { Route as PatientsIdRouteImport } from './routes/patients.$id'
 import { Route as ApiPublicConfigHospitalCodeRouteImport } from './routes/api/public/config.$hospitalCode'
 
+const PharmacyRoute = PharmacyRouteImport.update({
+  id: '/pharmacy',
+  path: '/pharmacy',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const PatientsRoute = PatientsRouteImport.update({
   id: '/patients',
   path: '/patients',
@@ -28,6 +35,11 @@ const PatientsRoute = PatientsRouteImport.update({
 const OnboardingRoute = OnboardingRouteImport.update({
   id: '/onboarding',
   path: '/onboarding',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const InventoryRoute = InventoryRouteImport.update({
+  id: '/inventory',
+  path: '/inventory',
   getParentRoute: () => rootRouteImport,
 } as any)
 const HospitalRoute = HospitalRouteImport.update({
@@ -78,8 +90,10 @@ export interface FileRoutesByFullPath {
   '/admin': typeof AdminRoute
   '/auth': typeof AuthRoute
   '/hospital': typeof HospitalRoute
+  '/inventory': typeof InventoryRoute
   '/onboarding': typeof OnboardingRoute
   '/patients': typeof PatientsRouteWithChildren
+  '/pharmacy': typeof PharmacyRoute
   '/patients/$id': typeof PatientsIdRoute
   '/patients/new': typeof PatientsNewRoute
   '/api/public/config/$hospitalCode': typeof ApiPublicConfigHospitalCodeRoute
@@ -90,8 +104,10 @@ export interface FileRoutesByTo {
   '/admin': typeof AdminRoute
   '/auth': typeof AuthRoute
   '/hospital': typeof HospitalRoute
+  '/inventory': typeof InventoryRoute
   '/onboarding': typeof OnboardingRoute
   '/patients': typeof PatientsRouteWithChildren
+  '/pharmacy': typeof PharmacyRoute
   '/patients/$id': typeof PatientsIdRoute
   '/patients/new': typeof PatientsNewRoute
   '/api/public/config/$hospitalCode': typeof ApiPublicConfigHospitalCodeRoute
@@ -103,8 +119,10 @@ export interface FileRoutesById {
   '/admin': typeof AdminRoute
   '/auth': typeof AuthRoute
   '/hospital': typeof HospitalRoute
+  '/inventory': typeof InventoryRoute
   '/onboarding': typeof OnboardingRoute
   '/patients': typeof PatientsRouteWithChildren
+  '/pharmacy': typeof PharmacyRoute
   '/patients/$id': typeof PatientsIdRoute
   '/patients/new': typeof PatientsNewRoute
   '/api/public/config/$hospitalCode': typeof ApiPublicConfigHospitalCodeRoute
@@ -117,8 +135,10 @@ export interface FileRouteTypes {
     | '/admin'
     | '/auth'
     | '/hospital'
+    | '/inventory'
     | '/onboarding'
     | '/patients'
+    | '/pharmacy'
     | '/patients/$id'
     | '/patients/new'
     | '/api/public/config/$hospitalCode'
@@ -129,8 +149,10 @@ export interface FileRouteTypes {
     | '/admin'
     | '/auth'
     | '/hospital'
+    | '/inventory'
     | '/onboarding'
     | '/patients'
+    | '/pharmacy'
     | '/patients/$id'
     | '/patients/new'
     | '/api/public/config/$hospitalCode'
@@ -141,8 +163,10 @@ export interface FileRouteTypes {
     | '/admin'
     | '/auth'
     | '/hospital'
+    | '/inventory'
     | '/onboarding'
     | '/patients'
+    | '/pharmacy'
     | '/patients/$id'
     | '/patients/new'
     | '/api/public/config/$hospitalCode'
@@ -154,13 +178,22 @@ export interface RootRouteChildren {
   AdminRoute: typeof AdminRoute
   AuthRoute: typeof AuthRoute
   HospitalRoute: typeof HospitalRoute
+  InventoryRoute: typeof InventoryRoute
   OnboardingRoute: typeof OnboardingRoute
   PatientsRoute: typeof PatientsRouteWithChildren
+  PharmacyRoute: typeof PharmacyRoute
   ApiPublicConfigHospitalCodeRoute: typeof ApiPublicConfigHospitalCodeRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/pharmacy': {
+      id: '/pharmacy'
+      path: '/pharmacy'
+      fullPath: '/pharmacy'
+      preLoaderRoute: typeof PharmacyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/patients': {
       id: '/patients'
       path: '/patients'
@@ -173,6 +206,13 @@ declare module '@tanstack/react-router' {
       path: '/onboarding'
       fullPath: '/onboarding'
       preLoaderRoute: typeof OnboardingRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/inventory': {
+      id: '/inventory'
+      path: '/inventory'
+      fullPath: '/inventory'
+      preLoaderRoute: typeof InventoryRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/hospital': {
@@ -254,8 +294,10 @@ const rootRouteChildren: RootRouteChildren = {
   AdminRoute: AdminRoute,
   AuthRoute: AuthRoute,
   HospitalRoute: HospitalRoute,
+  InventoryRoute: InventoryRoute,
   OnboardingRoute: OnboardingRoute,
   PatientsRoute: PatientsRouteWithChildren,
+  PharmacyRoute: PharmacyRoute,
   ApiPublicConfigHospitalCodeRoute: ApiPublicConfigHospitalCodeRoute,
 }
 export const routeTree = rootRouteImport
