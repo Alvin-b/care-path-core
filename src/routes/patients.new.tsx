@@ -12,7 +12,9 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Badge } from "@/components/ui/badge";
 import { toast } from "sonner";
-import { Stethoscope, ChevronLeft, UserCheck, AlertTriangle } from "lucide-react";
+import { Stethoscope, ChevronLeft, UserCheck, AlertTriangle, Sparkles } from "lucide-react";
+import { useServerFn } from "@tanstack/react-start";
+import { aiFindSimilarPatients, aiIndexPatient } from "@/lib/ai-patients.functions";
 
 export const Route = createFileRoute("/patients/new")({
   head: () => ({ meta: [{ title: "Register patient — Afyacore HMIS" }] }),
