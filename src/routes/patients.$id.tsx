@@ -6,7 +6,7 @@ import { useAuth } from "@/hooks/use-auth";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Stethoscope, ChevronLeft, Phone, Mail, MapPin, Heart, ShieldAlert } from "lucide-react";
+import { Stethoscope, ChevronLeft, Phone, Mail, MapPin, Heart, ShieldAlert, UserCheck, Clock } from "lucide-react";
 
 export const Route = createFileRoute("/patients/$id")({
   head: () => ({ meta: [{ title: "Patient — Afyacore HMIS" }] }),
@@ -29,6 +29,22 @@ function PatientDetail() {
       return data;
     },
   });
+
+  const { data: registrar } = useQuery({
+    queryKey: ["patient-registrar", p?.registered_by],
+    enabled: !!p?.registered_by,
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from("profiles")
+        .select("id, full_name, email")
+        .eq("id", p!.registered_by!)
+        .maybeSingle();
+      if (error) throw error;
+      return data;
+    },
+  });
+
+
 
   if (loading || isLoading) return <div className="flex min-h-screen items-center justify-center text-muted-foreground">Loading…</div>;
   if (error) return <div className="p-8 text-sm text-destructive">{error.message}</div>;
@@ -66,6 +82,19 @@ function PatientDetail() {
                 {age !== null && <> · {age}y{p.dob_estimated ? " (est.)" : ""}</>}
                 {p.blood_group !== "unknown" && <> · Blood {p.blood_group}</>}
               </div>
+            </div>
+            <div className="flex flex-col gap-1 text-xs text-muted-foreground sm:items-end sm:text-right">
+              <div className="flex items-center gap-1.5">
+                <UserCheck className="h-3.5 w-3.5" />
+                <span>Registered by <b className="text-foreground">{registrar?.full_name || registrar?.email || (p.registered_by ? "Unknown user" : "System")}</b></span>
+              </div>
+              <div className="flex items-center gap-1.5">
+                <Clock className="h-3.5 w-3.5" />
+                <span>{new Date(p.created_at).toLocaleString()}</span>
+              </div>
+              {p.updated_at && p.updated_at !== p.created_at && (
+                <div className="text-[11px] opacity-70">Last updated {new Date(p.updated_at).toLocaleString()}</div>
+              )}
             </div>
           </CardContent>
         </Card>
