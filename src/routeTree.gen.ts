@@ -9,6 +9,7 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as ShaRouteImport } from './routes/sha'
 import { Route as PharmacyRouteImport } from './routes/pharmacy'
 import { Route as PatientsRouteImport } from './routes/patients'
 import { Route as OnboardingRouteImport } from './routes/onboarding'
@@ -21,7 +22,13 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as PatientsNewRouteImport } from './routes/patients.new'
 import { Route as PatientsIdRouteImport } from './routes/patients.$id'
 import { Route as ApiPublicConfigHospitalCodeRouteImport } from './routes/api/public/config.$hospitalCode'
+import { Route as ApiPublicShaCallbackHospitalIdRouteImport } from './routes/api/public/sha.callback.$hospitalId'
 
+const ShaRoute = ShaRouteImport.update({
+  id: '/sha',
+  path: '/sha',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const PharmacyRoute = PharmacyRouteImport.update({
   id: '/pharmacy',
   path: '/pharmacy',
@@ -83,6 +90,12 @@ const ApiPublicConfigHospitalCodeRoute =
     path: '/api/public/config/$hospitalCode',
     getParentRoute: () => rootRouteImport,
   } as any)
+const ApiPublicShaCallbackHospitalIdRoute =
+  ApiPublicShaCallbackHospitalIdRouteImport.update({
+    id: '/api/public/sha/callback/$hospitalId',
+    path: '/api/public/sha/callback/$hospitalId',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -94,9 +107,11 @@ export interface FileRoutesByFullPath {
   '/onboarding': typeof OnboardingRoute
   '/patients': typeof PatientsRouteWithChildren
   '/pharmacy': typeof PharmacyRoute
+  '/sha': typeof ShaRoute
   '/patients/$id': typeof PatientsIdRoute
   '/patients/new': typeof PatientsNewRoute
   '/api/public/config/$hospitalCode': typeof ApiPublicConfigHospitalCodeRoute
+  '/api/public/sha/callback/$hospitalId': typeof ApiPublicShaCallbackHospitalIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -108,9 +123,11 @@ export interface FileRoutesByTo {
   '/onboarding': typeof OnboardingRoute
   '/patients': typeof PatientsRouteWithChildren
   '/pharmacy': typeof PharmacyRoute
+  '/sha': typeof ShaRoute
   '/patients/$id': typeof PatientsIdRoute
   '/patients/new': typeof PatientsNewRoute
   '/api/public/config/$hospitalCode': typeof ApiPublicConfigHospitalCodeRoute
+  '/api/public/sha/callback/$hospitalId': typeof ApiPublicShaCallbackHospitalIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -123,9 +140,11 @@ export interface FileRoutesById {
   '/onboarding': typeof OnboardingRoute
   '/patients': typeof PatientsRouteWithChildren
   '/pharmacy': typeof PharmacyRoute
+  '/sha': typeof ShaRoute
   '/patients/$id': typeof PatientsIdRoute
   '/patients/new': typeof PatientsNewRoute
   '/api/public/config/$hospitalCode': typeof ApiPublicConfigHospitalCodeRoute
+  '/api/public/sha/callback/$hospitalId': typeof ApiPublicShaCallbackHospitalIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -139,9 +158,11 @@ export interface FileRouteTypes {
     | '/onboarding'
     | '/patients'
     | '/pharmacy'
+    | '/sha'
     | '/patients/$id'
     | '/patients/new'
     | '/api/public/config/$hospitalCode'
+    | '/api/public/sha/callback/$hospitalId'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -153,9 +174,11 @@ export interface FileRouteTypes {
     | '/onboarding'
     | '/patients'
     | '/pharmacy'
+    | '/sha'
     | '/patients/$id'
     | '/patients/new'
     | '/api/public/config/$hospitalCode'
+    | '/api/public/sha/callback/$hospitalId'
   id:
     | '__root__'
     | '/'
@@ -167,9 +190,11 @@ export interface FileRouteTypes {
     | '/onboarding'
     | '/patients'
     | '/pharmacy'
+    | '/sha'
     | '/patients/$id'
     | '/patients/new'
     | '/api/public/config/$hospitalCode'
+    | '/api/public/sha/callback/$hospitalId'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -182,11 +207,20 @@ export interface RootRouteChildren {
   OnboardingRoute: typeof OnboardingRoute
   PatientsRoute: typeof PatientsRouteWithChildren
   PharmacyRoute: typeof PharmacyRoute
+  ShaRoute: typeof ShaRoute
   ApiPublicConfigHospitalCodeRoute: typeof ApiPublicConfigHospitalCodeRoute
+  ApiPublicShaCallbackHospitalIdRoute: typeof ApiPublicShaCallbackHospitalIdRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/sha': {
+      id: '/sha'
+      path: '/sha'
+      fullPath: '/sha'
+      preLoaderRoute: typeof ShaRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/pharmacy': {
       id: '/pharmacy'
       path: '/pharmacy'
@@ -271,6 +305,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiPublicConfigHospitalCodeRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/public/sha/callback/$hospitalId': {
+      id: '/api/public/sha/callback/$hospitalId'
+      path: '/api/public/sha/callback/$hospitalId'
+      fullPath: '/api/public/sha/callback/$hospitalId'
+      preLoaderRoute: typeof ApiPublicShaCallbackHospitalIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -298,7 +339,9 @@ const rootRouteChildren: RootRouteChildren = {
   OnboardingRoute: OnboardingRoute,
   PatientsRoute: PatientsRouteWithChildren,
   PharmacyRoute: PharmacyRoute,
+  ShaRoute: ShaRoute,
   ApiPublicConfigHospitalCodeRoute: ApiPublicConfigHospitalCodeRoute,
+  ApiPublicShaCallbackHospitalIdRoute: ApiPublicShaCallbackHospitalIdRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
