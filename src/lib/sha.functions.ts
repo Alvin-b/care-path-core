@@ -240,7 +240,7 @@ export const shaGetPatientBenefits = createServerFn({ method: "POST" })
       error_message: res.ok ? null : res.error ?? null,
       checked_by: context.userId,
     } as never);
-    return { ok: res.ok, status: res.status, data: res.data };
+    return { ok: res.ok, status: res.status, data: asJson(res.data) };
   });
 
 // ------------------- Claims -------------------
