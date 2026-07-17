@@ -1,6 +1,10 @@
 import { createServerFn } from "@tanstack/react-start";
 import { z } from "zod";
 import { requireSupabaseAuth } from "@/integrations/supabase/auth-middleware";
+import type { Json } from "@/integrations/supabase/types";
+
+const asJson = (v: unknown): Json => JSON.parse(JSON.stringify(v ?? null)) as Json;
+const asStr = (v: unknown): string | null => (typeof v === "string" ? v : null);
 
 /**
  * SHA / Afyalink server functions.
