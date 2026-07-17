@@ -445,7 +445,7 @@ export const shaGetClaimStatus = createServerFn({ method: "POST" })
     } as never);
 
     if (!res.ok) throw new Error(res.error ?? "Status fetch failed.");
-    return { ok: true, data: res.data };
+    return { ok: true as const, data: asJson(res.data) };
   });
 
 type ClaimItem = {
