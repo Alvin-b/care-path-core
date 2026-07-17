@@ -917,6 +917,7 @@ export type Database = {
           registered_by: string | null
           religion: string | null
           sex: Database["public"]["Enums"]["patient_sex"]
+          sha_cr_id: string | null
           sha_number: string | null
           sub_county: string | null
           updated_at: string
@@ -978,6 +979,7 @@ export type Database = {
           registered_by?: string | null
           religion?: string | null
           sex?: Database["public"]["Enums"]["patient_sex"]
+          sha_cr_id?: string | null
           sha_number?: string | null
           sub_county?: string | null
           updated_at?: string
@@ -1039,6 +1041,7 @@ export type Database = {
           registered_by?: string | null
           religion?: string | null
           sex?: Database["public"]["Enums"]["patient_sex"]
+          sha_cr_id?: string | null
           sha_number?: string | null
           sub_county?: string | null
           updated_at?: string
@@ -1310,6 +1313,433 @@ export type Database = {
           },
         ]
       }
+      sha_claim_events: {
+        Row: {
+          actor: string | null
+          claim_id: string
+          created_at: string
+          event_type: string
+          from_state: Database["public"]["Enums"]["sha_claim_state"] | null
+          hospital_id: string
+          http_status: number | null
+          id: string
+          message: string | null
+          payload: Json | null
+          to_state: Database["public"]["Enums"]["sha_claim_state"] | null
+        }
+        Insert: {
+          actor?: string | null
+          claim_id: string
+          created_at?: string
+          event_type: string
+          from_state?: Database["public"]["Enums"]["sha_claim_state"] | null
+          hospital_id: string
+          http_status?: number | null
+          id?: string
+          message?: string | null
+          payload?: Json | null
+          to_state?: Database["public"]["Enums"]["sha_claim_state"] | null
+        }
+        Update: {
+          actor?: string | null
+          claim_id?: string
+          created_at?: string
+          event_type?: string
+          from_state?: Database["public"]["Enums"]["sha_claim_state"] | null
+          hospital_id?: string
+          http_status?: number | null
+          id?: string
+          message?: string | null
+          payload?: Json | null
+          to_state?: Database["public"]["Enums"]["sha_claim_state"] | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "sha_claim_events_claim_id_fkey"
+            columns: ["claim_id"]
+            isOneToOne: false
+            referencedRelation: "sha_claims"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "sha_claim_events_hospital_id_fkey"
+            columns: ["hospital_id"]
+            isOneToOne: false
+            referencedRelation: "hospitals"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      sha_claims: {
+        Row: {
+          billable_end: string | null
+          billable_start: string | null
+          bundle_id: string
+          claim_ref: string
+          claim_type: string
+          cr_id: string | null
+          created_at: string
+          created_by: string | null
+          currency: string
+          diagnoses: Json
+          error_message: string | null
+          hospital_id: string
+          http_status: number | null
+          id: string
+          items: Json
+          last_state_at: string
+          paid_amount: number | null
+          paid_at: string | null
+          patient_id: string
+          practitioner_name: string | null
+          practitioner_puid: string | null
+          preauth_token: string | null
+          provider_auth_token: string | null
+          request_bundle: Json | null
+          response_payload: Json | null
+          sha_number: string | null
+          state: Database["public"]["Enums"]["sha_claim_state"]
+          submitted_at: string | null
+          submitted_by: string | null
+          subtype: string
+          total_amount: number
+          updated_at: string
+        }
+        Insert: {
+          billable_end?: string | null
+          billable_start?: string | null
+          bundle_id?: string
+          claim_ref?: string
+          claim_type?: string
+          cr_id?: string | null
+          created_at?: string
+          created_by?: string | null
+          currency?: string
+          diagnoses?: Json
+          error_message?: string | null
+          hospital_id: string
+          http_status?: number | null
+          id?: string
+          items?: Json
+          last_state_at?: string
+          paid_amount?: number | null
+          paid_at?: string | null
+          patient_id: string
+          practitioner_name?: string | null
+          practitioner_puid?: string | null
+          preauth_token?: string | null
+          provider_auth_token?: string | null
+          request_bundle?: Json | null
+          response_payload?: Json | null
+          sha_number?: string | null
+          state?: Database["public"]["Enums"]["sha_claim_state"]
+          submitted_at?: string | null
+          submitted_by?: string | null
+          subtype?: string
+          total_amount?: number
+          updated_at?: string
+        }
+        Update: {
+          billable_end?: string | null
+          billable_start?: string | null
+          bundle_id?: string
+          claim_ref?: string
+          claim_type?: string
+          cr_id?: string | null
+          created_at?: string
+          created_by?: string | null
+          currency?: string
+          diagnoses?: Json
+          error_message?: string | null
+          hospital_id?: string
+          http_status?: number | null
+          id?: string
+          items?: Json
+          last_state_at?: string
+          paid_amount?: number | null
+          paid_at?: string | null
+          patient_id?: string
+          practitioner_name?: string | null
+          practitioner_puid?: string | null
+          preauth_token?: string | null
+          provider_auth_token?: string | null
+          request_bundle?: Json | null
+          response_payload?: Json | null
+          sha_number?: string | null
+          state?: Database["public"]["Enums"]["sha_claim_state"]
+          submitted_at?: string | null
+          submitted_by?: string | null
+          subtype?: string
+          total_amount?: number
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "sha_claims_hospital_id_fkey"
+            columns: ["hospital_id"]
+            isOneToOne: false
+            referencedRelation: "hospitals"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "sha_claims_patient_id_fkey"
+            columns: ["patient_id"]
+            isOneToOne: false
+            referencedRelation: "patients"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      sha_dispatch_queue: {
+        Row: {
+          attempts: number
+          claim_id: string | null
+          created_at: string
+          hospital_id: string
+          id: string
+          last_error: string | null
+          next_attempt_at: string
+          operation: string
+          payload: Json
+          status: string
+          updated_at: string
+        }
+        Insert: {
+          attempts?: number
+          claim_id?: string | null
+          created_at?: string
+          hospital_id: string
+          id?: string
+          last_error?: string | null
+          next_attempt_at?: string
+          operation: string
+          payload?: Json
+          status?: string
+          updated_at?: string
+        }
+        Update: {
+          attempts?: number
+          claim_id?: string | null
+          created_at?: string
+          hospital_id?: string
+          id?: string
+          last_error?: string | null
+          next_attempt_at?: string
+          operation?: string
+          payload?: Json
+          status?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "sha_dispatch_queue_claim_id_fkey"
+            columns: ["claim_id"]
+            isOneToOne: false
+            referencedRelation: "sha_claims"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "sha_dispatch_queue_hospital_id_fkey"
+            columns: ["hospital_id"]
+            isOneToOne: false
+            referencedRelation: "hospitals"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      sha_eligibility_checks: {
+        Row: {
+          check_kind: string
+          checked_at: string
+          checked_by: string | null
+          coverage_end_date: string | null
+          cr_id: string | null
+          eligible: boolean | null
+          error_message: string | null
+          full_name: string | null
+          hospital_id: string
+          http_status: number | null
+          id: string
+          identification_number: string
+          identification_type: string
+          message: string | null
+          patient_id: string | null
+          possible_solution: string | null
+          reason: string | null
+          request_payload: Json | null
+          response_payload: Json | null
+          sha_number: string | null
+        }
+        Insert: {
+          check_kind?: string
+          checked_at?: string
+          checked_by?: string | null
+          coverage_end_date?: string | null
+          cr_id?: string | null
+          eligible?: boolean | null
+          error_message?: string | null
+          full_name?: string | null
+          hospital_id: string
+          http_status?: number | null
+          id?: string
+          identification_number: string
+          identification_type: string
+          message?: string | null
+          patient_id?: string | null
+          possible_solution?: string | null
+          reason?: string | null
+          request_payload?: Json | null
+          response_payload?: Json | null
+          sha_number?: string | null
+        }
+        Update: {
+          check_kind?: string
+          checked_at?: string
+          checked_by?: string | null
+          coverage_end_date?: string | null
+          cr_id?: string | null
+          eligible?: boolean | null
+          error_message?: string | null
+          full_name?: string | null
+          hospital_id?: string
+          http_status?: number | null
+          id?: string
+          identification_number?: string
+          identification_type?: string
+          message?: string | null
+          patient_id?: string | null
+          possible_solution?: string | null
+          reason?: string | null
+          request_payload?: Json | null
+          response_payload?: Json | null
+          sha_number?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "sha_eligibility_checks_hospital_id_fkey"
+            columns: ["hospital_id"]
+            isOneToOne: false
+            referencedRelation: "hospitals"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "sha_eligibility_checks_patient_id_fkey"
+            columns: ["patient_id"]
+            isOneToOne: false
+            referencedRelation: "patients"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      sha_settings: {
+        Row: {
+          base_url: string
+          callback_basic_pass: string | null
+          callback_basic_user: string | null
+          callback_secret: string | null
+          client_id: string | null
+          client_secret: string | null
+          configured_at: string | null
+          configured_by: string | null
+          created_at: string
+          enabled: boolean
+          environment: string
+          facility_code: string | null
+          facility_level: string | null
+          fhir_base_url: string
+          hospital_id: string
+          last_test_at: string | null
+          last_test_message: string | null
+          last_test_ok: boolean | null
+          token_url: string | null
+          updated_at: string
+        }
+        Insert: {
+          base_url?: string
+          callback_basic_pass?: string | null
+          callback_basic_user?: string | null
+          callback_secret?: string | null
+          client_id?: string | null
+          client_secret?: string | null
+          configured_at?: string | null
+          configured_by?: string | null
+          created_at?: string
+          enabled?: boolean
+          environment?: string
+          facility_code?: string | null
+          facility_level?: string | null
+          fhir_base_url?: string
+          hospital_id: string
+          last_test_at?: string | null
+          last_test_message?: string | null
+          last_test_ok?: boolean | null
+          token_url?: string | null
+          updated_at?: string
+        }
+        Update: {
+          base_url?: string
+          callback_basic_pass?: string | null
+          callback_basic_user?: string | null
+          callback_secret?: string | null
+          client_id?: string | null
+          client_secret?: string | null
+          configured_at?: string | null
+          configured_by?: string | null
+          created_at?: string
+          enabled?: boolean
+          environment?: string
+          facility_code?: string | null
+          facility_level?: string | null
+          fhir_base_url?: string
+          hospital_id?: string
+          last_test_at?: string | null
+          last_test_message?: string | null
+          last_test_ok?: boolean | null
+          token_url?: string | null
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "sha_settings_hospital_id_fkey"
+            columns: ["hospital_id"]
+            isOneToOne: true
+            referencedRelation: "hospitals"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      sha_token_cache: {
+        Row: {
+          access_token: string
+          expires_at: string
+          hospital_id: string
+          token_type: string
+          updated_at: string
+        }
+        Insert: {
+          access_token: string
+          expires_at: string
+          hospital_id: string
+          token_type?: string
+          updated_at?: string
+        }
+        Update: {
+          access_token?: string
+          expires_at?: string
+          hospital_id?: string
+          token_type?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "sha_token_cache_hospital_id_fkey"
+            columns: ["hospital_id"]
+            isOneToOne: true
+            referencedRelation: "hospitals"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       stock_movements: {
         Row: {
           batch_id: string | null
@@ -1500,6 +1930,7 @@ export type Database = {
           registered_by: string | null
           religion: string | null
           sex: Database["public"]["Enums"]["patient_sex"]
+          sha_cr_id: string | null
           sha_number: string | null
           sub_county: string | null
           updated_at: string
@@ -1602,6 +2033,20 @@ export type Database = {
       patient_sex: "male" | "female" | "intersex" | "unknown"
       platform_kind: "android" | "ios" | "windows" | "macos" | "linux" | "web"
       prescription_status: "pending" | "partial" | "dispensed" | "cancelled"
+      sha_claim_state:
+        | "draft"
+        | "validating"
+        | "submitted"
+        | "queued"
+        | "in-review"
+        | "clinical-review"
+        | "approved"
+        | "rejected"
+        | "sent-for-payment-processing"
+        | "sent-to-surveillance"
+        | "payment-completed"
+        | "payment-declined"
+        | "error"
       stock_movement_type:
         | "receipt"
         | "dispense"
@@ -1802,6 +2247,21 @@ export const Constants = {
       patient_sex: ["male", "female", "intersex", "unknown"],
       platform_kind: ["android", "ios", "windows", "macos", "linux", "web"],
       prescription_status: ["pending", "partial", "dispensed", "cancelled"],
+      sha_claim_state: [
+        "draft",
+        "validating",
+        "submitted",
+        "queued",
+        "in-review",
+        "clinical-review",
+        "approved",
+        "rejected",
+        "sent-for-payment-processing",
+        "sent-to-surveillance",
+        "payment-completed",
+        "payment-declined",
+        "error",
+      ],
       stock_movement_type: [
         "receipt",
         "dispense",
