@@ -198,16 +198,16 @@ export const shaCheckEligibility = createServerFn({ method: "POST" })
     }
 
     return {
-      checkId: insertRes.data.id,
+      checkId: insertRes.data.id as string,
       ok: res.ok,
       eligible,
       cr_id,
-      full_name: msg.full_name ?? null,
-      coverageEndDate: msg.coverageEndDate ?? null,
-      message: msg.message ?? null,
-      reason: msg.reason ?? null,
-      possible_solution: msg.possible_solution ?? null,
-      raw: res.data,
+      full_name: asStr(msg.full_name),
+      coverageEndDate: asStr(msg.coverageEndDate),
+      message: asStr(msg.message),
+      reason: asStr(msg.reason),
+      possible_solution: asStr(msg.possible_solution),
+      raw: asJson(res.data),
       status: res.status,
     };
   });
