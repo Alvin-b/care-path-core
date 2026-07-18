@@ -170,6 +170,19 @@ function PatientDetail() {
         </div>
 
         {p.hospital_id && (
+          <div className="flex flex-wrap items-center gap-2">
+            <ReferPatientDialog
+              patientId={p.id}
+              hospitalId={p.hospital_id}
+              patientName={fullName}
+            />
+            <Link to="/queue"><Button size="sm" variant="outline">Open department queue</Button></Link>
+          </div>
+        )}
+
+        <PatientReferrals patientId={p.id} />
+
+        {p.hospital_id && (
           <ShaEligibilityCard
             hospitalId={p.hospital_id}
             patientId={p.id}
