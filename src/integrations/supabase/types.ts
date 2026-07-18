@@ -1277,6 +1277,119 @@ export type Database = {
           },
         ]
       }
+      referral_rules: {
+        Row: {
+          from_role: Database["public"]["Enums"]["app_role"]
+          id: string
+          to_dept_code: string
+        }
+        Insert: {
+          from_role: Database["public"]["Enums"]["app_role"]
+          id?: string
+          to_dept_code: string
+        }
+        Update: {
+          from_role?: Database["public"]["Enums"]["app_role"]
+          id?: string
+          to_dept_code?: string
+        }
+        Relationships: []
+      }
+      referrals: {
+        Row: {
+          called_at: string | null
+          clinical_notes: string | null
+          completed_at: string | null
+          completion_notes: string | null
+          created_at: string
+          from_department_id: string | null
+          from_user_id: string | null
+          hospital_id: string
+          id: string
+          patient_id: string
+          priority: Database["public"]["Enums"]["referral_priority"]
+          queue_date: string
+          queue_number: number | null
+          reason: string
+          started_at: string | null
+          status: Database["public"]["Enums"]["referral_status"]
+          to_department_id: string
+          to_user_id: string | null
+          updated_at: string
+        }
+        Insert: {
+          called_at?: string | null
+          clinical_notes?: string | null
+          completed_at?: string | null
+          completion_notes?: string | null
+          created_at?: string
+          from_department_id?: string | null
+          from_user_id?: string | null
+          hospital_id: string
+          id?: string
+          patient_id: string
+          priority?: Database["public"]["Enums"]["referral_priority"]
+          queue_date?: string
+          queue_number?: number | null
+          reason: string
+          started_at?: string | null
+          status?: Database["public"]["Enums"]["referral_status"]
+          to_department_id: string
+          to_user_id?: string | null
+          updated_at?: string
+        }
+        Update: {
+          called_at?: string | null
+          clinical_notes?: string | null
+          completed_at?: string | null
+          completion_notes?: string | null
+          created_at?: string
+          from_department_id?: string | null
+          from_user_id?: string | null
+          hospital_id?: string
+          id?: string
+          patient_id?: string
+          priority?: Database["public"]["Enums"]["referral_priority"]
+          queue_date?: string
+          queue_number?: number | null
+          reason?: string
+          started_at?: string | null
+          status?: Database["public"]["Enums"]["referral_status"]
+          to_department_id?: string
+          to_user_id?: string | null
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "referrals_from_department_id_fkey"
+            columns: ["from_department_id"]
+            isOneToOne: false
+            referencedRelation: "departments"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "referrals_hospital_id_fkey"
+            columns: ["hospital_id"]
+            isOneToOne: false
+            referencedRelation: "hospitals"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "referrals_patient_id_fkey"
+            columns: ["patient_id"]
+            isOneToOne: false
+            referencedRelation: "patients"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "referrals_to_department_id_fkey"
+            columns: ["to_department_id"]
+            isOneToOne: false
+            referencedRelation: "departments"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       role_permissions: {
         Row: {
           hospital_id: string | null
@@ -1861,6 +1974,80 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      advance_referral: {
+        Args: {
+          _notes?: string
+          _referral_id: string
+          _to_status: Database["public"]["Enums"]["referral_status"]
+        }
+        Returns: {
+          called_at: string | null
+          clinical_notes: string | null
+          completed_at: string | null
+          completion_notes: string | null
+          created_at: string
+          from_department_id: string | null
+          from_user_id: string | null
+          hospital_id: string
+          id: string
+          patient_id: string
+          priority: Database["public"]["Enums"]["referral_priority"]
+          queue_date: string
+          queue_number: number | null
+          reason: string
+          started_at: string | null
+          status: Database["public"]["Enums"]["referral_status"]
+          to_department_id: string
+          to_user_id: string | null
+          updated_at: string
+        }
+        SetofOptions: {
+          from: "*"
+          to: "referrals"
+          isOneToOne: true
+          isSetofReturn: false
+        }
+      }
+      can_refer: {
+        Args: { _to_dept_id: string; _user_id: string }
+        Returns: boolean
+      }
+      create_referral: {
+        Args: {
+          _clinical_notes: string
+          _patient_id: string
+          _priority: Database["public"]["Enums"]["referral_priority"]
+          _reason: string
+          _to_department_id: string
+        }
+        Returns: {
+          called_at: string | null
+          clinical_notes: string | null
+          completed_at: string | null
+          completion_notes: string | null
+          created_at: string
+          from_department_id: string | null
+          from_user_id: string | null
+          hospital_id: string
+          id: string
+          patient_id: string
+          priority: Database["public"]["Enums"]["referral_priority"]
+          queue_date: string
+          queue_number: number | null
+          reason: string
+          started_at: string | null
+          status: Database["public"]["Enums"]["referral_status"]
+          to_department_id: string
+          to_user_id: string | null
+          updated_at: string
+        }
+        SetofOptions: {
+          from: "*"
+          to: "referrals"
+          isOneToOne: true
+          isSetofReturn: false
+        }
+      }
       current_hospital_id: { Args: never; Returns: string }
       dispense_prescription: {
         Args: { _lines: Json; _prescription_id: string }
@@ -2033,6 +2220,13 @@ export type Database = {
       patient_sex: "male" | "female" | "intersex" | "unknown"
       platform_kind: "android" | "ios" | "windows" | "macos" | "linux" | "web"
       prescription_status: "pending" | "partial" | "dispensed" | "cancelled"
+      referral_priority: "routine" | "urgent" | "emergency"
+      referral_status:
+        | "queued"
+        | "called"
+        | "in_progress"
+        | "completed"
+        | "cancelled"
       sha_claim_state:
         | "draft"
         | "validating"
@@ -2247,6 +2441,14 @@ export const Constants = {
       patient_sex: ["male", "female", "intersex", "unknown"],
       platform_kind: ["android", "ios", "windows", "macos", "linux", "web"],
       prescription_status: ["pending", "partial", "dispensed", "cancelled"],
+      referral_priority: ["routine", "urgent", "emergency"],
+      referral_status: [
+        "queued",
+        "called",
+        "in_progress",
+        "completed",
+        "cancelled",
+      ],
       sha_claim_state: [
         "draft",
         "validating",
