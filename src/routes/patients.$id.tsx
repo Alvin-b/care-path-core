@@ -167,6 +167,15 @@ function PatientDetail() {
           </InfoCard>
         </div>
 
+        {p.hospital_id && (
+          <ShaEligibilityCard
+            hospitalId={p.hospital_id}
+            patientId={p.id}
+            defaultShaNumber={p.sha_number}
+            defaultNationalId={p.national_id}
+          />
+        )}
+
         {p.notes && (
           <Card>
             <CardHeader><CardTitle className="text-base">Notes</CardTitle></CardHeader>
