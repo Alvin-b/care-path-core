@@ -10,6 +10,7 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as ShaRouteImport } from './routes/sha'
+import { Route as QueueRouteImport } from './routes/queue'
 import { Route as PharmacyRouteImport } from './routes/pharmacy'
 import { Route as PatientsRouteImport } from './routes/patients'
 import { Route as OnboardingRouteImport } from './routes/onboarding'
@@ -27,6 +28,11 @@ import { Route as ApiPublicShaCallbackHospitalIdRouteImport } from './routes/api
 const ShaRoute = ShaRouteImport.update({
   id: '/sha',
   path: '/sha',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const QueueRoute = QueueRouteImport.update({
+  id: '/queue',
+  path: '/queue',
   getParentRoute: () => rootRouteImport,
 } as any)
 const PharmacyRoute = PharmacyRouteImport.update({
@@ -107,6 +113,7 @@ export interface FileRoutesByFullPath {
   '/onboarding': typeof OnboardingRoute
   '/patients': typeof PatientsRouteWithChildren
   '/pharmacy': typeof PharmacyRoute
+  '/queue': typeof QueueRoute
   '/sha': typeof ShaRoute
   '/patients/$id': typeof PatientsIdRoute
   '/patients/new': typeof PatientsNewRoute
@@ -123,6 +130,7 @@ export interface FileRoutesByTo {
   '/onboarding': typeof OnboardingRoute
   '/patients': typeof PatientsRouteWithChildren
   '/pharmacy': typeof PharmacyRoute
+  '/queue': typeof QueueRoute
   '/sha': typeof ShaRoute
   '/patients/$id': typeof PatientsIdRoute
   '/patients/new': typeof PatientsNewRoute
@@ -140,6 +148,7 @@ export interface FileRoutesById {
   '/onboarding': typeof OnboardingRoute
   '/patients': typeof PatientsRouteWithChildren
   '/pharmacy': typeof PharmacyRoute
+  '/queue': typeof QueueRoute
   '/sha': typeof ShaRoute
   '/patients/$id': typeof PatientsIdRoute
   '/patients/new': typeof PatientsNewRoute
@@ -158,6 +167,7 @@ export interface FileRouteTypes {
     | '/onboarding'
     | '/patients'
     | '/pharmacy'
+    | '/queue'
     | '/sha'
     | '/patients/$id'
     | '/patients/new'
@@ -174,6 +184,7 @@ export interface FileRouteTypes {
     | '/onboarding'
     | '/patients'
     | '/pharmacy'
+    | '/queue'
     | '/sha'
     | '/patients/$id'
     | '/patients/new'
@@ -190,6 +201,7 @@ export interface FileRouteTypes {
     | '/onboarding'
     | '/patients'
     | '/pharmacy'
+    | '/queue'
     | '/sha'
     | '/patients/$id'
     | '/patients/new'
@@ -207,6 +219,7 @@ export interface RootRouteChildren {
   OnboardingRoute: typeof OnboardingRoute
   PatientsRoute: typeof PatientsRouteWithChildren
   PharmacyRoute: typeof PharmacyRoute
+  QueueRoute: typeof QueueRoute
   ShaRoute: typeof ShaRoute
   ApiPublicConfigHospitalCodeRoute: typeof ApiPublicConfigHospitalCodeRoute
   ApiPublicShaCallbackHospitalIdRoute: typeof ApiPublicShaCallbackHospitalIdRoute
@@ -219,6 +232,13 @@ declare module '@tanstack/react-router' {
       path: '/sha'
       fullPath: '/sha'
       preLoaderRoute: typeof ShaRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/queue': {
+      id: '/queue'
+      path: '/queue'
+      fullPath: '/queue'
+      preLoaderRoute: typeof QueueRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/pharmacy': {
@@ -339,6 +359,7 @@ const rootRouteChildren: RootRouteChildren = {
   OnboardingRoute: OnboardingRoute,
   PatientsRoute: PatientsRouteWithChildren,
   PharmacyRoute: PharmacyRoute,
+  QueueRoute: QueueRoute,
   ShaRoute: ShaRoute,
   ApiPublicConfigHospitalCodeRoute: ApiPublicConfigHospitalCodeRoute,
   ApiPublicShaCallbackHospitalIdRoute: ApiPublicShaCallbackHospitalIdRoute,

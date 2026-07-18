@@ -8,6 +8,8 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Stethoscope, ChevronLeft, Phone, Mail, MapPin, Heart, ShieldAlert, UserCheck, Clock } from "lucide-react";
 import { ShaEligibilityCard } from "@/components/sha-eligibility-card";
+import { ReferPatientDialog } from "@/components/refer-patient-dialog";
+import { PatientReferrals } from "@/components/patient-referrals";
 
 export const Route = createFileRoute("/patients/$id")({
   head: () => ({ meta: [{ title: "Patient — Afyacore HMIS" }] }),
