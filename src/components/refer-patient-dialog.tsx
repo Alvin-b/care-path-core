@@ -87,7 +87,7 @@ export function ReferPatientDialog({
               <SelectTrigger><SelectValue placeholder="Choose a department" /></SelectTrigger>
               <SelectContent>
                 {departments.map((d) => (
-                  <SelectItem key={d.id} value={d.id}>{d.name} <span className="text-muted-foreground">· {d.code}</span></SelectItem>
+                  <SelectItem key={d.id} value={d.id}>{d.name}{d.code ? ` · ${d.code}` : ""}</SelectItem>
                 ))}
               </SelectContent>
             </Select>
