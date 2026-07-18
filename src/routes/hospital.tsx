@@ -13,7 +13,8 @@ import { Switch } from "@/components/ui/switch";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import { toast } from "sonner";
-import { Building2, LogOut, Stethoscope, Users, Palette, Settings2, GitBranch, Puzzle, Trash2, Copy } from "lucide-react";
+import { Building2, LogOut, Stethoscope, Users, Palette, Settings2, GitBranch, Puzzle, Trash2, Copy, ShieldCheck } from "lucide-react";
+import { ShaSettingsTab } from "@/components/sha-settings-tab";
 
 export const Route = createFileRoute("/hospital")({
   head: () => ({ meta: [{ title: "Hospital admin — Afyacore HMIS" }] }),
