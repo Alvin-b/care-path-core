@@ -8,6 +8,8 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Stethoscope, ChevronLeft, Phone, Mail, MapPin, Heart, ShieldAlert, UserCheck, Clock } from "lucide-react";
 import { ShaEligibilityCard } from "@/components/sha-eligibility-card";
+import { ReferPatientDialog } from "@/components/refer-patient-dialog";
+import { PatientReferrals } from "@/components/patient-referrals";
 
 export const Route = createFileRoute("/patients/$id")({
   head: () => ({ meta: [{ title: "Patient — Afyacore HMIS" }] }),
@@ -166,6 +168,19 @@ function PatientDetail() {
             <Row k="Relationship" v={p.emergency_contact_relationship} />
           </InfoCard>
         </div>
+
+        {p.hospital_id && (
+          <div className="flex flex-wrap items-center gap-2">
+            <ReferPatientDialog
+              patientId={p.id}
+              hospitalId={p.hospital_id}
+              patientName={fullName}
+            />
+            <Link to="/queue"><Button size="sm" variant="outline">Open department queue</Button></Link>
+          </div>
+        )}
+
+        <PatientReferrals patientId={p.id} />
 
         {p.hospital_id && (
           <ShaEligibilityCard
