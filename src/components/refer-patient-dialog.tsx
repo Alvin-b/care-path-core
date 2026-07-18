@@ -51,7 +51,7 @@ export function ReferPatientDialog({
         _to_department_id: toDept,
         _priority: priority,
         _reason: reason,
-        _clinical_notes: notes || null,
+        _clinical_notes: notes || "",
       });
       if (error) throw error;
       return data;
