@@ -13,7 +13,8 @@ import { Switch } from "@/components/ui/switch";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import { toast } from "sonner";
-import { Building2, LogOut, Stethoscope, Users, Palette, Settings2, GitBranch, Puzzle, Trash2, Copy } from "lucide-react";
+import { Building2, LogOut, Stethoscope, Users, Palette, Settings2, GitBranch, Puzzle, Trash2, Copy, ShieldCheck } from "lucide-react";
+import { ShaSettingsTab } from "@/components/sha-settings-tab";
 
 export const Route = createFileRoute("/hospital")({
   head: () => ({ meta: [{ title: "Hospital admin — Afyacore HMIS" }] }),
@@ -108,12 +109,14 @@ function HospitalAdmin() {
             <TabsTrigger value="staff"><Users className="mr-1 h-4 w-4" /> Staff & invites</TabsTrigger>
             <TabsTrigger value="branding"><Palette className="mr-1 h-4 w-4" /> Branding</TabsTrigger>
             <TabsTrigger value="settings"><Settings2 className="mr-1 h-4 w-4" /> Settings</TabsTrigger>
+            <TabsTrigger value="sha"><ShieldCheck className="mr-1 h-4 w-4" /> SHA</TabsTrigger>
           </TabsList>
           <TabsContent value="modules"><ModulesTab hospitalId={hospital.id} /></TabsContent>
           <TabsContent value="branches"><BranchesTab hospitalId={hospital.id} /></TabsContent>
           <TabsContent value="staff"><StaffTab hospitalId={hospital.id} /></TabsContent>
           <TabsContent value="branding"><BrandingTab hospitalId={hospital.id} /></TabsContent>
           <TabsContent value="settings"><SettingsTab hospitalId={hospital.id} hospitalCode={hospital.code} /></TabsContent>
+          <TabsContent value="sha"><ShaSettingsTab hospitalId={hospital.id} /></TabsContent>
         </Tabs>
       </main>
     </div>

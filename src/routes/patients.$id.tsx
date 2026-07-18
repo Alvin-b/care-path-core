@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Stethoscope, ChevronLeft, Phone, Mail, MapPin, Heart, ShieldAlert, UserCheck, Clock } from "lucide-react";
+import { ShaEligibilityCard } from "@/components/sha-eligibility-card";
 
 export const Route = createFileRoute("/patients/$id")({
   head: () => ({ meta: [{ title: "Patient — Afyacore HMIS" }] }),
@@ -165,6 +166,15 @@ function PatientDetail() {
             <Row k="Relationship" v={p.emergency_contact_relationship} />
           </InfoCard>
         </div>
+
+        {p.hospital_id && (
+          <ShaEligibilityCard
+            hospitalId={p.hospital_id}
+            patientId={p.id}
+            defaultShaNumber={p.sha_number}
+            defaultNationalId={p.national_id}
+          />
+        )}
 
         {p.notes && (
           <Card>
